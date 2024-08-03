@@ -89,16 +89,16 @@ WSGI_APPLICATION = 'shelf_io_server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#         'default': {
-#             'ENGINE': 'djongo',
-#             'NAME': 'Shelf',
-#             'ENFORCE_SCHEMA': False,
-#             'CLIENT': {
-#                 'host':env('DB_HOST')
-#             }  
-#         }
-# }
+DATABASES = {
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'Shelf',
+            'ENFORCE_SCHEMA': False,
+            'CLIENT': {
+                'host':env('DB_HOST')
+            }  
+        }
+}
 
 
 # Password validation
