@@ -50,7 +50,12 @@ INSTALLED_APPS = [
     "apps.user",
     "rest_framework",
     "rest_framework_simplejwt",
+    "corsheaders",
 ]
+
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -77,6 +82,7 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -84,6 +90,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "middleware.auth_middleware.bearer_token_middleware",
 ]
+
 
 ROOT_URLCONF = "shelf_io_server.urls"
 
