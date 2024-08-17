@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .services.book import create_book, get_all_books_service
-from .services.notes import create_note, get_notes_by_book_id, update_note_service
+from .services.notes import create_note, get_all_notes_by_id, update_note_service
 
 
 @api_view(["GET", "POST"])
@@ -66,7 +66,9 @@ def note_view(request):
 def get_all_notes(request):
     book_id = request.GET.get("id")
 
-    response = get_notes_by_book_id(book_id)
+    print(book_id)
+
+    response = get_all_notes_by_id(book_id)
 
     if "error" in response:
         return Response(
