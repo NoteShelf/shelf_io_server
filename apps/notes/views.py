@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .services.book import create_book, get_all_books_service
-from .services.notes import create_note, get_notes_by_book_id
+from .services.notes import create_note, get_notes_by_book_id, update_note_service
 
 
 @api_view(["GET", "POST"])
@@ -39,11 +39,14 @@ def get_all_books(request):
         return Response(response, status=status.HTTP_200_OK)
 
 
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST", "PUT"])
 def note_view(request):
 
     if request.method == "GET":
         return get_all_notes(request)
+
+    elif request.method == "PUT":
+        return update_note(request)
 
     elif request.method == "POST":
         user_info = request.user_info
@@ -53,7 +56,7 @@ def note_view(request):
 
         if note.get("success"):
             return Response(
-                {"message": "Book created successfully", "id": note["id"]},
+                {"message": "Note created successfully", "id": note["id"]},
                 status=status.HTTP_201_CREATED,
             )
         else:
@@ -61,11 +64,9 @@ def note_view(request):
 
 
 def get_all_notes(request):
-    book_id = request.GET("id")
+    book_id = request.GET.get("id")
 
-    print(book_id)
-
-    response = get_all_books_service(book_id)
+    response = get_notes_by_book_id(book_id)
 
     if "error" in response:
         return Response(
@@ -73,3 +74,15 @@ def get_all_notes(request):
         )
     else:
         return Response(response, status=status.HTTP_200_OK)
+
+
+def update_note(request):
+    response = update_note_service(request.data)
+
+    if response.get("success"):
+        return Response(
+            {"message": "Note update successfully"},
+            status=status.HTTP_201_CREATED,
+        )
+    else:
+        return Response(response, status=status.HTTP_400_BAD_REQUEST)

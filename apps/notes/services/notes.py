@@ -1,6 +1,25 @@
 from django.utils import timezone
 
-from ..repositories.note_repo import create_note_repo, get_notes_by_book_id
+from ..repositories.note_repo import (
+    create_note_repo,
+    get_notes_by_book_id,
+    update_note_repo,
+)
+
+
+def update_note_service(note_data):
+    try:
+        updated_note = update_note_repo(
+            note_data["id"], note_data["title"], note_data["content"], timezone.now()
+        )
+
+        if hasattr(updated_note, "upserted_id"):
+            return {"success": True}
+        else:
+            return {"error": "Failed to update note"}
+
+    except Exception as e:
+        return {"error": "An unexpected error occurred: " + str(e)}
 
 
 def create_note(note_data, user_info):

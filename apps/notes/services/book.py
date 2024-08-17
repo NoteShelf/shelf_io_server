@@ -8,7 +8,6 @@ def create_book(book_details, user_info):
 
         book_details["user_id"] = user_info["id"]
         book_details["shelf_id"] = None
-        book_details["notes"] = []
         book_details["created_at"] = timezone.now()
         book_details["updated_at"] = timezone.now()
 
