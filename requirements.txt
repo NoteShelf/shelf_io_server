@@ -12,3 +12,4 @@ PyJWT==2.9.0
 sqlparse==0.5.1
 tzdata==2024.1
 virtualenv==20.26.3
+pymongo==4.8.0
