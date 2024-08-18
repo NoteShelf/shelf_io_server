@@ -24,6 +24,9 @@ def update_note_service(note_data):
 
 def create_note(note_data, user_info):
     try:
+        if not note_data["title"]:
+            note_data["title"] = "Untitled"
+
         note_data["user_id"] = user_info["id"]
         note_data["shelf_id"] = None
         note_data["created_at"] = timezone.now()
