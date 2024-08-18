@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     "apps.notes",
     "apps.user",
     "rest_framework",
-    "rest_framework_simplejwt",
     "corsheaders",
 ]
 
