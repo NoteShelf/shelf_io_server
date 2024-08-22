@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
-ALLOWED_HOSTS = ["localhost", "shelfio.koyeb.app", "shelfio.netlify.app"]
+ALLOWED_HOSTS = ["localhost", "shelfio.koyeb.app", "shelfio.netlify.app", "127.0.0.1"]
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")

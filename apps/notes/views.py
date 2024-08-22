@@ -2,7 +2,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .services.book import create_book, get_all_books_service
-from .services.notes import create_note, get_all_notes_by_id, update_note_service
+from .services.notes import (
+    create_note,
+    get_all_notes_by_id,
+    update_note_service,
+    delete_note_by_id_service,
+)
 
 
 @api_view(["GET", "POST"])
@@ -39,7 +44,7 @@ def get_all_books(request):
         return Response(response, status=status.HTTP_200_OK)
 
 
-@api_view(["GET", "POST", "PUT"])
+@api_view(["GET", "POST", "PUT", "DELETE"])
 def note_view(request):
 
     if request.method == "GET":
@@ -47,6 +52,9 @@ def note_view(request):
 
     elif request.method == "PUT":
         return update_note(request)
+    
+    elif request.method == "DELETE":
+        return delete_note_or_book(request)
 
     elif request.method == "POST":
         user_info = request.user_info
@@ -65,8 +73,6 @@ def note_view(request):
 
 def get_all_notes(request):
     book_id = request.GET.get("id")
-
-    print(book_id)
 
     response = get_all_notes_by_id(book_id)
 
@@ -88,3 +94,17 @@ def update_note(request):
         )
     else:
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+
+def delete_note_or_book(request):
+
+    note_id = request.GET.get("id")
+
+    response = delete_note_by_id_service(note_id)
+
+    if "error" in response:
+        return Response(
+            {"error": response["error"]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+    else:
+        return Response(response, status=status.HTTP_200_OK)

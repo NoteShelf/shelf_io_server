@@ -4,6 +4,7 @@ from ..repositories.note_repo import (
     create_note_repo,
     get_notes_by_book_id,
     update_note_repo,
+    delete_note_by_id_repo
 )
 
 
@@ -46,5 +47,12 @@ def get_all_notes_by_id(book_id):
     try:
         all_notes = get_notes_by_book_id(book_id)
         return all_notes
+    except Exception as e:
+        return {"error": str(e)}
+
+def delete_note_by_id_service(note_id):
+    try:
+        result = delete_note_by_id_repo(note_id)
+        return  result
     except Exception as e:
         return {"error": str(e)}
