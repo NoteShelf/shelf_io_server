@@ -1,3 +1,5 @@
+from bson import ObjectId
+
 from utils import get_collection_handle
 
 collection_name = "books"
@@ -20,3 +22,15 @@ def get_all_books_by_user_id(id):
     books = list(db.aggregate(pipeline))
 
     return books
+
+
+def delete_book_by_id_repo(bookId):
+    response = db.delete_one({"_id": ObjectId(bookId)})
+
+    result = (
+        {"error": "No such note found"}
+        if response.deleted_count == 0
+        else {"success": True}
+    )
+
+    return result
