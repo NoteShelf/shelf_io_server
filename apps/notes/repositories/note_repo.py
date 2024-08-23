@@ -40,7 +40,17 @@ def get_notes_by_book_id(id):
 def delete_note_by_id_repo(noteId):
     response = db.delete_one({"_id": ObjectId(noteId)})
 
-    print(response.acknowledged)
+    result = (
+        {"error": "No such note found"}
+        if response.deleted_count == 0
+        else {"success": True}
+    )
+
+    return result
+
+
+def delete_all_note_of_a_book(bookId):
+    response = db.delete_many({"book_id": bookId})
 
     result = (
         {"error": "No such note found"}
