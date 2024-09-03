@@ -34,3 +34,9 @@ def delete_book_by_id_repo(bookId):
     )
 
     return result
+
+
+def update_book_name_repo(bookId, name):
+    response = db.update_one({"_id": ObjectId(bookId)}, {"$set": {"title": name}})
+
+    return response
