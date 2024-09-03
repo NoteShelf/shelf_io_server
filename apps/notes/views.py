@@ -1,7 +1,12 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .services.book import create_book, get_all_books_service, delete_book_by_id_service
+from .services.book import (
+    create_book,
+    get_all_books_service,
+    delete_book_by_id_service,
+    update_book_name_service,
+)
 from .services.notes import (
     create_note,
     get_all_notes_by_id,
@@ -10,12 +15,13 @@ from .services.notes import (
 )
 
 
-@api_view(["GET", "POST", "DELETE"])
+@api_view(["GET", "POST", "PUT", "DELETE"])
 def book_view(request):
 
     if request.method == "GET":
         return get_all_books(request)
-
+    elif request.method == "PUT":
+        return update_book_name_view(request)
     elif request.method == "POST":
         book_data = request.data
         user_info = getattr(request, "user_info", None)
@@ -42,6 +48,18 @@ def get_all_books(request):
         )
     else:
         return Response(response, status=status.HTTP_200_OK)
+
+
+def update_book_name_view(request):
+    try:
+        book_id = request.data["id"]
+        book_name = request.data["title"]
+
+        update_book_name_service(book_id, book_name)
+
+        return Response({"success": True}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error": e}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(["GET", "POST", "PUT", "DELETE"])
