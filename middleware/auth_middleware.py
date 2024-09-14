@@ -8,7 +8,7 @@ env = environ.Env()
 
 def bearer_token_middleware(get_response):
     def middleware(request):
-        if request.path != "/login":
+        if request.path not in ["/login", "/register"]:
             auth_header = request.headers.get("Authorization")
             if not auth_header:
                 return JsonResponse(

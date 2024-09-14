@@ -18,13 +18,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apps.user.views import login
+from apps.user.views import login, register_user
 from apps.notes.views import book_view, note_view
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("login", login),
+    path("register", register_user),
     path("book", book_view),
     path("note", note_view),
 ]

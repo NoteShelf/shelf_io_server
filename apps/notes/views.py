@@ -23,18 +23,22 @@ def book_view(request):
     elif request.method == "PUT":
         return update_book_name_view(request)
     elif request.method == "POST":
-        book_data = request.data
-        user_info = getattr(request, "user_info", None)
+        return create_book(request)
 
-        book = create_book(book_data, user_info)
 
-        if book.get("success"):
-            return Response(
-                {"message": "Book created successfully", "id": book["id"]},
-                status=status.HTTP_201_CREATED,
-            )
-        else:
-            return Response(book, status=status.HTTP_400_BAD_REQUEST)
+def create_book(request):
+    book_data = request.data
+    user_info = getattr(request, "user_info", None)
+
+    book = create_book(book_data, user_info)
+
+    if book.get("success"):
+        return Response(
+            {"message": "Book created successfully", "id": book["id"]},
+            status=status.HTTP_201_CREATED,
+        )
+    else:
+        return Response(book, status=status.HTTP_400_BAD_REQUEST)
 
 
 def get_all_books(request):
@@ -75,18 +79,22 @@ def note_view(request):
         return delete_note_or_book(request)
 
     elif request.method == "POST":
-        user_info = request.user_info
-        book_data = request.data
+        return create_a_note(request)
 
-        note = create_note(book_data, user_info)
 
-        if note.get("success"):
-            return Response(
-                {"message": "Note created successfully", "id": note["id"]},
-                status=status.HTTP_201_CREATED,
-            )
-        else:
-            return Response(note, status=status.HTTP_400_BAD_REQUEST)
+def create_a_note(request):
+    user_info = request.user_info
+    book_data = request.data
+
+    note = create_note(book_data, user_info)
+
+    if note.get("success"):
+        return Response(
+            {"message": "Note created successfully", "id": note["id"]},
+            status=status.HTTP_201_CREATED,
+        )
+    else:
+        return Response(note, status=status.HTTP_400_BAD_REQUEST)
 
 
 def get_all_notes(request):
