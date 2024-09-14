@@ -24,6 +24,8 @@ def book_view(request):
         return update_book_name_view(request)
     elif request.method == "POST":
         return create_book_view(request)
+    elif request.method == "DELETE":
+        return delete_note_or_book(request, True)
 
 
 def create_book_view(request):
