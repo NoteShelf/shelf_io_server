@@ -4,7 +4,7 @@ from ..repositories.note_repo import (
     create_note_repo,
     get_notes_by_book_id,
     update_note_repo,
-    delete_note_by_id_repo
+    delete_note_by_id_repo,
 )
 
 
@@ -23,7 +23,7 @@ def update_note_service(note_data):
         return {"error": "An unexpected error occurred: " + str(e)}
 
 
-def create_note(note_data, user_info):
+def create_note_service(note_data, user_info):
     try:
         if not note_data["title"]:
             note_data["title"] = "Untitled"
@@ -50,9 +50,10 @@ def get_all_notes_by_id(book_id):
     except Exception as e:
         return {"error": str(e)}
 
+
 def delete_note_by_id_service(note_id):
     try:
         result = delete_note_by_id_repo(note_id)
-        return  result
+        return result
     except Exception as e:
         return {"error": str(e)}

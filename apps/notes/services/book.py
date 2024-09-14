@@ -4,13 +4,13 @@ from ..repositories.book_repo import (
     create_book_in_db,
     get_all_books_by_user_id,
     delete_book_by_id_repo,
-    update_book_name_repo
+    update_book_name_repo,
 )
 
 from ..repositories.note_repo import delete_all_note_of_a_book
 
 
-def create_book(book_details, user_info):
+def create_book_service(book_details, user_info):
     try:
         if not book_details["title"]:
             book_details["title"] = "Untitled"
@@ -48,8 +48,9 @@ def delete_book_by_id_service(book_id):
     except Exception as e:
         return {"error": str(e)}
 
+
 def update_book_name_service(book_id, book_name):
-    
+
     result = update_book_name_repo(book_id, book_name)
 
     return result

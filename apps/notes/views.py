@@ -2,13 +2,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .services.book import (
-    create_book,
+    create_book_service,
     get_all_books_service,
     delete_book_by_id_service,
     update_book_name_service,
 )
 from .services.notes import (
-    create_note,
+    create_note_service,
     get_all_notes_by_id,
     update_note_service,
     delete_note_by_id_service,
@@ -23,14 +23,14 @@ def book_view(request):
     elif request.method == "PUT":
         return update_book_name_view(request)
     elif request.method == "POST":
-        return create_book(request)
+        return create_book_view(request)
 
 
-def create_book(request):
+def create_book_view(request):
     book_data = request.data
     user_info = getattr(request, "user_info", None)
 
-    book = create_book(book_data, user_info)
+    book = create_book_service(book_data, user_info)
 
     if book.get("success"):
         return Response(
@@ -86,7 +86,7 @@ def create_a_note(request):
     user_info = request.user_info
     book_data = request.data
 
-    note = create_note(book_data, user_info)
+    note = create_note_service(book_data, user_info)
 
     if note.get("success"):
         return Response(
